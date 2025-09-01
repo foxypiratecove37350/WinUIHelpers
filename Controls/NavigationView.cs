@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using System;
 
 namespace WinUIHelpers.Controls
 {
@@ -10,13 +11,26 @@ namespace WinUIHelpers.Controls
             DependencyProperty.Register(
                 nameof(To),
                 typeof(Frame),
-                typeof(SelectorBar),
+                typeof(NavigationView),
                 new PropertyMetadata(null)
             );
         public Frame To
         {
             get => (Frame)GetValue(ToProperty);
             set => SetValue(ToProperty, value);
+        }
+
+        public static readonly DependencyProperty SettingsPageProperty =
+            DependencyProperty.Register(
+                nameof(SettingsPage),
+                typeof(Type),
+                typeof(NavigationView),
+                new PropertyMetadata(null)
+            );
+        public Type SettingsPage
+        {
+            get => (Type)GetValue(SettingsPageProperty);
+            set => SetValue(SettingsPageProperty, value);
         }
 
         public NavigationView()
