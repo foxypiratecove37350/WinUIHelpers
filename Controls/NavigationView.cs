@@ -35,8 +35,18 @@ namespace WinUIHelpers.Controls
             }
 
             NavigationView sender = (NavigationView)s;
-            SelectorBarItem selectedItem = (SelectorBarItem)sender.SelectedItem;
-            int currentSelectedIndex = sender.MenuItems.IndexOf(selectedItem);
+
+            if (e.IsSettingsSelected && sender.To != null && SettingsPage != null)
+            {
+                sender.To.Navigate(
+                    SettingsPage,
+                    null,
+                    new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromBottom }
+                );
+                return;
+            }
+
+            NavigationViewItem selectedItem = (NavigationViewItem)sender.SelectedItem;
 
             if (sender.To != null && selectedItem != null && selectedItem.To != null)
             {
