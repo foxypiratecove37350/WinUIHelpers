@@ -22,6 +22,8 @@ namespace WinUIHelpers.Markup
 
             return StringResources.GetString(Name);
         }
+
+        public StringResourceExtension() { }
     }
 
     public static class StringResources
