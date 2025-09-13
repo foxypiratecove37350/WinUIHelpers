@@ -77,6 +77,31 @@ namespace WinUIHelpers.Controls
             }
         }
 
+        public WindowPositionSpecialValues StartPosition
+        {
+            set
+            {
+                if (value == WindowPositionSpecialValues.Center)
+                {
+                    Position = WindowPosition.Center;
+                }
+                else if (value == WindowPositionSpecialValues.Default)
+                {
+                    Position = WindowPosition.Default;
+                }
+            }
+        }
+
+        public int X
+        {
+            get => Position.X; set => Position = new WindowPosition(value, Y);
+        }
+
+        public int Y
+        {
+            get => Position.Y; set => Position = new WindowPosition(X, value);
+        }
+
         public Window()
         {
             ExtendsContentIntoTitleBar = true;
