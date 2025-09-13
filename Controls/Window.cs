@@ -1,10 +1,12 @@
 ﻿using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using Windows.ApplicationModel;
+using Windows.Foundation;
 using Windows.Graphics;
 using WinUIHelpers.Windowing;
 
@@ -18,7 +20,63 @@ namespace WinUIHelpers.Controls
         private readonly Grid _grid;
         private readonly ContentControl _contentControl;
 
-        public readonly TitleBar TitleBar;
+        public TitleBar TitleBar { get; set; }
+        public string? TitleBarTitle
+        {
+            get => TitleBar.Title;
+            set => TitleBar.Title = value;
+        }
+        public string? TitleBarSubtitle
+        {
+            get => TitleBar.Subtitle;
+            set => TitleBar.Subtitle = value;
+        }
+        public bool TitleBarIsBackButtonVisible
+        {
+            get => TitleBar.IsBackButtonVisible;
+            set => TitleBar.IsBackButtonVisible = value;
+        }
+        public bool TitleBarIsBackButtonEnabled
+        {
+            get => TitleBar.IsBackButtonEnabled;
+            set => TitleBar.IsBackButtonEnabled = value;
+        }
+        public event TypedEventHandler<TitleBar, object> TitleBarBackRequested
+        {
+            add => TitleBar.BackRequested += value;
+            remove => TitleBar.BackRequested -= value;
+        }
+        public bool TitleBarIsPaneToggleButtonVisible
+        {
+            get => TitleBar.IsPaneToggleButtonVisible;
+            set => TitleBar.IsPaneToggleButtonVisible = value;
+        }
+        public event TypedEventHandler<TitleBar, object> TitleBarPaneToggleRequested
+        {
+            add => TitleBar.PaneToggleRequested += value;
+            remove => TitleBar.PaneToggleRequested -= value;
+        }
+        public IconSource TitleBarIconSource
+        {
+            get => TitleBar.IconSource;
+            set => TitleBar.IconSource = value;
+        }
+        public UIElement TitleBarLeftHeader
+        {
+            get => TitleBar.LeftHeader;
+            set => TitleBar.LeftHeader = value;
+        }
+        public UIElement TitleBarContent
+        {
+            get => TitleBar.Content;
+            set => TitleBar.Content = value;
+        }
+        public UIElement TitleBarRightHeader
+        {
+            get => TitleBar.RightHeader;
+            set => TitleBar.RightHeader = value;
+        }
+
         public static string AppVersion
         {
             get
@@ -39,7 +97,7 @@ namespace WinUIHelpers.Controls
             set
             {
                 base.Title = value;
-                TitleBar.Title = value;
+                TitleBar.Title = TitleBarTitle ?? value;
             }
         }
         public int Height
@@ -135,6 +193,18 @@ namespace WinUIHelpers.Controls
             _grid.Children.Add(_contentControl);
 
             base.Content = _grid;
+
+            if (Content is NavigationView navView)
+            {
+                TitleBarBackRequested += (s, e) => navView.To.GoBack();
+                TitleBarPaneToggleRequested += (s, e) => navView.IsPaneOpen = !navView.IsPaneOpen;
+                TitleBar.SetBinding(TitleBar.IsBackButtonVisibleProperty, new Binding
+                {
+                    Source = navView.To,
+                    Path = new PropertyPath(nameof(navView.To.CanGoBack)),
+                    Mode = BindingMode.OneWay
+                });
+            }
         }
     }
 }
