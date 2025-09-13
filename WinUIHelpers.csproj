@@ -6,10 +6,51 @@
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
 	<Nullable>enable</Nullable>
+	<Title>WinUI Helpers</Title>
+	<Authors>RFSDev</Authors>
+	<Description>Set of useful helpers and boilerplate code for WinUI</Description>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RepositoryUrl>https://github.com/foxypiratecove37350/WinUIHelpers</RepositoryUrl>
+	<PackageReleaseNotes>Features
+
+- Controls:
+  - Wrapper around `Window` exposing `Width`, `Height` and `Position` for more declarative windowing, and automatically generating a `TitleBar`
+  - Wrapper around `SelectorBar` and `SelectorBarItem` to allow for more declarative navigation with the `To` property
+  - Wrapper around `NavigationView` and `NavigationViewItem` to allow for more declarative navigation with the `To` and `SettingsPage` properties
+- Markup:
+  - Markup extension to simplify using string resources in XAML
+- Windowing:
+  - Structure for more customization of the window's position with both coordinates and centered
+
+Know issues
+
+- Markup:
+  - `StringResourceExtension`: Doesn't work when used without specifying the parameter name.
+</PackageReleaseNotes>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<PackageIcon>WinUIHelpers.png</PackageIcon>
+	<PackageTags>WinUI;helpers</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="WinUIHelpers.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.4948" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   
 </Project>
