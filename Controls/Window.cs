@@ -187,7 +187,8 @@ namespace WinUIHelpers.Controls
 
             _contentControl = new ContentControl
             {
-                HorizontalContentAlignment = HorizontalAlignment.Stretch
+                HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                VerticalContentAlignment = VerticalAlignment.Stretch
             };
             Grid.SetRow(_contentControl, 1);
             _grid.Children.Add(_contentControl);
